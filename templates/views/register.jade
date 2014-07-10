@@ -1,0 +1,40 @@
+extends ../layouts/default
+
+block intro
+	.container
+		h1 Register
+		
+block content
+	.container
+		if userSubmitted
+			h3 Thank you, your registration has been submitted.
+		else
+			.row: .col-sm-8.col-md-6
+				form(method='post')
+					input(type='hidden', name='action', value='register')
+					.form-group(class=validationErrors.name ? 'has-error' : null)
+						label First Name
+						input(type='text', name='name.first', value=formData['name.first'], required).form-control
+					.form-group(class=validationErrors.name ? 'has-error' : null)
+						label Last Name
+						input(type='text', name='name.last', value=formData['name.last'], required).form-control
+					.form-group(class=validationErrors.email ? 'has-error' : null)
+						label Email
+						input(type='email', name='email', value=formData.email, required).form-control
+					.form-group(class=validationErrors.company ? 'has-error' : null)
+						label Company
+						input(type='text', name='company', value=formData.company, required).form-control
+					.form-group(class=validationErrors.accessLevel ? 'has-error' : null)
+						label Requested Access Level
+						select(name='accessLevel').form-control
+							option(value='') (select one)
+							each level in accessLevel
+								option(value=level.value, selected=formData.accessLevel == level.value)= level.label
+					.form-group(class=validationErrors.password ? 'has-error' : null)
+						label Password
+						input(type='password', name='password', value=formData.password, required).form-control
+					.form-group(class=validationErrors.password ? 'has-error' : null)
+						label Confirm Password
+						input(type='password', name='password_confirm', value=formData.password_confirm, required).form-control
+					.form-actions
+						button(type='submit').btn.btn-primary Submit
